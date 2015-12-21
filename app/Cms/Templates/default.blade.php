@@ -1,1 +1,3 @@
-<h1>:D</h1>
+<h1>Default Template</h1>
+
+{{ dump($data) }}

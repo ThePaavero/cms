@@ -4,16 +4,21 @@ namespace App\Cms\Core;
 
 class Template
 {
-    public function __construct($slug)
+    public function __construct($data)
     {
-        $this->slug = $slug;
+        $this->data = $data;
     }
 
-    public function slugMapsToFile()
+    public function viewFileExists()
     {
-        $fileName = $this->slug . '.blade.php';
+        $fileName = $this->data['slug'] . '.blade.php';
         $templateFilePath = __DIR__ . '/../Templates/' . $fileName;
 
         return file_exists($templateFilePath);
+    }
+
+    public function getContentAssociatedTypes()
+    {
+        return $this->data['contentTypes'];
     }
 }

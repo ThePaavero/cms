@@ -25,14 +25,34 @@ class Cms
         }
 
         $templateSlug = $mappedPage->templateSlug;
+        $templateData = $this->getTemplateDataBySlug($templateSlug);
 
-        $template = $template = new Template($templateSlug);
+        $template = $template = new Template($templateData);
 
-        if ( ! $template->slugMapsToFile())
+        if ( ! $template->viewFileExists())
         {
             App::abort(500, 'Template file missing (' . $templateSlug . ').');
         }
 
-        return view('cms::' . $templateSlug, []);
+        $contentTypesForTemplate = $template->getContentAssociatedTypes();
+
+        return view('cms::' . $templateSlug, [
+            'data' => [
+                'config' => $this->config,
+                'contentTypesForTemplate' => $contentTypesForTemplate
+            ]
+        ]);
+    }
+
+    public function getTemplateDataBySlug($templateSlug)
+    {
+        foreach ($this->config['templates'] as $name => $data)
+        {
+            if ($data['slug'] === $templateSlug)
+            {
+                $data['name'] = $name;
+                return $data;
+            }
+        }
     }
 }
