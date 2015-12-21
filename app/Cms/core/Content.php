@@ -10,9 +10,4 @@ class Content extends Model
     {
         // ...
     }
-
-    public function getContentForContentTypeAndPage($contentTypeSlug, $pageId)
-    {
-        // ...
-    }
 }

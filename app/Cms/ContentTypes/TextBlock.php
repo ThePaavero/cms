@@ -2,6 +2,8 @@
 
 namespace App\Cms\ContentTypes;
 
+use App\Cms\Core\Content;
+
 class TextBlock
 {
     public function __construct()
@@ -9,8 +11,17 @@ class TextBlock
         // ...
     }
 
-    public function render($pageId)
+    public function render($parentId)
     {
-        return ['Hey, page "' . $pageId . '"!'];
+        $contents = Content::where('contentTypeSlug', 'textBlock')
+            ->where('parentId', $parentId)
+            ->get();
+
+        if ($contents->isEmpty())
+        {
+            return false;
+        }
+
+        return $contents;
     }
 }
