@@ -2,9 +2,7 @@
 
 namespace App\Cms\Core;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Template extends Model
+class Template
 {
     public function __construct()
     {

@@ -8,7 +8,7 @@ class Cms
 {
     public function __construct()
     {
-        // ...
+        $this->config = include __DIR__ . '/../Config/cms.php';
     }
 
     public function processUri($uri)

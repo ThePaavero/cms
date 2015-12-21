@@ -15,32 +15,32 @@ class PagesTableSeeder extends Seeder
             [
                 'uri' => '',
                 'title' => 'Home',
-                'template_id' => 1
+                'templateSlug' => 'default'
             ],
             [
                 'uri' => 'about',
                 'title' => 'About',
-                'template_id' => 1
+                'templateSlug' => 'default'
             ],
             [
                 'uri' => 'about/staff',
                 'title' => 'Staff',
-                'template_id' => 1
+                'templateSlug' => 'wide_content'
             ],
             [
                 'uri' => 'about/philosophy',
                 'title' => 'Philosophy',
-                'template_id' => 1
+                'templateSlug' => 'default'
             ],
             [
                 'uri' => 'services',
                 'title' => 'Services',
-                'template_id' => 1
+                'templateSlug' => 'default'
             ],
             [
                 'uri' => 'services/guaranteed-quality',
                 'title' => 'Guaranteed Quality',
-                'template_id' => 1
+                'templateSlug' => 'default'
             ],
         ];
 
@@ -49,7 +49,7 @@ class PagesTableSeeder extends Seeder
             $page = new \App\Cms\Core\Page();
             $page->uri = $pageData['uri'];
             $page->title = $pageData['title'];
-            $page->template_id = $pageData['template_id'];
+            $page->templateSlug = $pageData['templateSlug'];
             $page->save();
 
             $pageId = $page->id;

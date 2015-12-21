@@ -14,7 +14,7 @@ class UriMapper
 
     public function getMappedPage()
     {
-        $page = Page::where('uri', $this->uri)->with(['template'])->first();
+        $page = Page::where('uri', $this->uri)->first();
 
         if ( ! $page)
         {

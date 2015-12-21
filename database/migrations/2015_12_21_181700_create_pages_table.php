@@ -19,7 +19,7 @@ class CreatePagesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('uri')->nullable()->unique();
-            $table->integer('template_id')->index();
+            $table->string('templateSlug')->index();
             $table->timestamps();
         });
     }

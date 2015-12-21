@@ -2,9 +2,7 @@
 
 namespace App\Cms\Core;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Page extends Model
+class ContentType
 {
     public function __construct()
     {
