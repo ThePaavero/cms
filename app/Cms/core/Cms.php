@@ -34,12 +34,22 @@ class Cms
             App::abort(500, 'Template file missing (' . $templateSlug . ').');
         }
 
-        $contentTypesForTemplate = $template->getContentAssociatedTypes();
+        $contentTypeNames = $template->getContentAssociatedTypes();
+        $contentTypesForTemplate = $this->getContentTypesByNames($contentTypeNames);
+
+        $content = [];
+
+        foreach ($contentTypesForTemplate as $contentType)
+        {
+            $content[$contentType['name']] = $this->renderContent($contentType, $mappedPage->id);
+        }
 
         return view('cms::' . $templateSlug, [
             'data' => [
                 'config' => $this->config,
+                'title' => $mappedPage->title,
                 'page' => $mappedPage->toArray(),
+                'content' => $content,
                 'contentTypesForTemplate' => $contentTypesForTemplate
             ]
         ]);
@@ -55,5 +65,27 @@ class Cms
                 return $data;
             }
         }
+    }
+
+    public function getContentTypesByNames($names)
+    {
+        $matches = [];
+
+        foreach ($this->config['contentTypes'] as $name => $data)
+        {
+            if (in_array($name, $names))
+            {
+                $formatted = $data;
+                $formatted['name'] = $name;
+                $matches[] = $formatted;
+            }
+        }
+
+        return $matches;
+    }
+
+    public function renderContent($contentType, $mappedPageId)
+    {
+        return [':D'];
     }
 }

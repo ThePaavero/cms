@@ -8,7 +8,7 @@ class UsersTableSeeder extends Seeder
     {
         $user = new \App\User();
         $user->name = 'Example Admin';
-        $user->email = 'admin';
+        $user->email = 'admin@example.com';
         $user->password = \Illuminate\Support\Facades\Hash::make('admin');
         $user->save();
     }

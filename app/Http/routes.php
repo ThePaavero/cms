@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/{segments}', 'CmsController@render')->where('segments', '(.*)');
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -24,7 +22,7 @@ Route::get('/{segments}', 'CmsController@render')->where('segments', '(.*)');
 |
 */
 
-Route::group(['middleware' => ['web']], function ()
-{
-    //
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+    Route::get('/{segments}', 'CmsController@render')->where('segments', '(.*)');
 });

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Yeah</title>
+    <title>{{ $data['title'] }}</title>
 </head>
 <body>
 @yield('content')
