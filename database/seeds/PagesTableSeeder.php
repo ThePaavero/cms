@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class PagesTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class PagesTableSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+
         $pages = [
             [
                 'uri' => '',
@@ -53,6 +56,12 @@ class PagesTableSeeder extends Seeder
             $page->save();
 
             $pageId = $page->id;
+
+            $content = new \App\Cms\Core\Content();
+            $content->content = $faker->sentence(20);
+            $content->contentTypeSlug = 'textBlock';
+            $content->parentId = $pageId;
+            $content->save();
         }
     }
 }

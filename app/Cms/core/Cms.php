@@ -86,6 +86,17 @@ class Cms
 
     public function renderContent($contentType, $mappedPageId)
     {
-        return [':D'];
+        $contents = [];
+
+        $contentTypeClass = 'App\\Cms\\ContentTypes\\' . $contentType['className'];
+        if ( ! class_exists($contentTypeClass))
+        {
+            App::abort(500, 'No class for ContentType "' . $contentType['className'] . '"');
+        }
+
+        $contentTypeInstance = new $contentTypeClass();
+        $contents[$contentType['slug']] = $contentTypeInstance->render($mappedPageId);
+
+        return $contents;
     }
 }

@@ -18,7 +18,8 @@ class CreateContentsTable extends Migration
         {
             $table->increments('id');
             $table->longText('content')->nullable();
-            $table->string('templateSlug')->index();
+            $table->string('contentTypeSlug')->index();
+            $table->integer('parentId')->index();
             $table->timestamps();
         });
     }
