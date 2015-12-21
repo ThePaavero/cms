@@ -1,3 +1,7 @@
-<h1>Default Template</h1>
+@extends('cms::layouts.main')
 
-{{ dump($data) }}
+@section('content')
+    <h1>Default Template</h1>
+
+    {{ dump($data) }}
+@endsection

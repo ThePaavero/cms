@@ -39,6 +39,7 @@ class Cms
         return view('cms::' . $templateSlug, [
             'data' => [
                 'config' => $this->config,
+                'page' => $mappedPage->toArray(),
                 'contentTypesForTemplate' => $contentTypesForTemplate
             ]
         ]);
