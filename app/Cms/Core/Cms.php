@@ -105,13 +105,34 @@ class Cms
         $contentTypeInstance = new $contentTypeClass();
         $renderedContent = $contentTypeInstance->render($mappedPageId);
 
+        if ($renderedContent === false)
+        {
+            // Create placeholder content
+            $this->createPlaceholderContent($mappedPageId, $contentType);
+
+            // Let's try this again
+            $renderedContent = $contentTypeInstance->render($mappedPageId);
+        }
+
         return $renderedContent;
     }
 
     public function render($type)
     {
-        $myContent = $this->pageContent[$type];
+        if ( ! isset($this->pageContent[$type]))
+        {
+            App::abort(500, 'ContentType "' . $type . '" did not have any rendered content.');
+        }
 
-        return $myContent;
+        return $this->pageContent[$type];
+    }
+
+    public function createPlaceholderContent($pageId, $contentType)
+    {
+        $content = new Content();
+        $content->content = $contentType['placeholder'];
+        $content->contentTypeSlug = $contentType['name'];
+        $content->parentId = $pageId;
+        $content->save();
     }
 }

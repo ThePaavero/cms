@@ -4,7 +4,7 @@ namespace App\Cms\ContentTypes;
 
 use App\Cms\Core\Content;
 
-class TextBlock
+class Heading
 {
     public function __construct()
     {
@@ -13,7 +13,7 @@ class TextBlock
 
     public function render($parentId)
     {
-        $contents = Content::where('contentTypeSlug', 'textBlock')
+        $contents = Content::where('contentTypeSlug', 'heading')
             ->where('parentId', $parentId)
             ->get();
 
