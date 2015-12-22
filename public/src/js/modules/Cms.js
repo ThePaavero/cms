@@ -1,4 +1,5 @@
 import TextBlock from 'modules/contentTypes/TextBlock';
+import Heading from 'modules/contentTypes/Heading';
 
 class Cms {
 
@@ -11,7 +12,8 @@ class Cms {
 
         this.userIsAdmin = window._CmsUserIsAdmin;
         this.contentTypes = {
-            'TextBlock': TextBlock
+            'TextBlock': TextBlock,
+            'Heading': Heading
         };
     }
 
