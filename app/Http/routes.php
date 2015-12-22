@@ -27,7 +27,7 @@ Route::group(['middleware' => 'web'], function ()
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
-    Route::get('/{segments}', 'CmsController@render')->where('segments', '(.*)');
+    Route::any('/{segments}', 'CmsController@render')->where('segments', '(.*)');
 });
 
 Route::group(['middleware' => 'auth'], function ()

@@ -158,6 +158,8 @@ class Cms
             }
 
             $contentTypeInstance = new $contentTypeClass();
+            array_shift($segments);
+
             return $contentTypeInstance->handleActionSegments($segments);
         }
     }

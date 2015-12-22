@@ -15,6 +15,19 @@ class TextBlock {
         $element.on('blur', (e) => {
             let $me = $(e.currentTarget);
             $me.prop('contenteditable', false);
+
+            let myContents = $me.html();
+            let contentId = $me.data('content-id');
+            let data = 'newContent=' + encodeURIComponent(myContents);
+
+            $.ajax({
+                type: 'POST',
+                url: _root + 'admin/contentType/TextBlock/updateContent/' + contentId,
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
         });
     }
 }
