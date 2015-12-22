@@ -3,6 +3,7 @@
 namespace App\Cms\ContentTypes;
 
 use App\Cms\Core\Content;
+use App\Cms\Core\ContentHistory;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 
@@ -10,7 +11,7 @@ class TextBlock
 {
     public function __construct()
     {
-        //Route::
+        // ...
     }
 
     public function render($parentId)
@@ -44,6 +45,15 @@ class TextBlock
         $newContent = Input::get('newContent');
 
         $contentRow = Content::findOrFail($id);
+
+        // Create history backup
+        $backup = new ContentHistory();
+        $backup->content = $contentRow->content;
+        $backup->originalId = $id;
+        $backup->contentTypeSlug = $contentRow->contentTypeSlug;
+        $backup->parentId = $contentRow->parentId;
+        $backup->save();
+
         $contentRow->content = $newContent;
         $contentRow->save();
 
