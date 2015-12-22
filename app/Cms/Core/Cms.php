@@ -20,6 +20,14 @@ class Cms
 
     public function processUri($uri)
     {
+        if (explode('/', $uri)[0] === 'admin')
+        {
+            $segments = explode('/', $uri);
+            array_shift($segments);
+
+            return $this->processAdminUri($segments);
+        }
+
         $mapper = new UriMapper($uri);
 
         if ( ! $mappedPage = $mapper->getMappedPage())
@@ -136,5 +144,21 @@ class Cms
         $content->contentTypeSlug = $contentType['name'];
         $content->parentId = $pageId;
         $content->save();
+    }
+
+    public function processAdminUri($segments)
+    {
+        if ($segments[0] === 'contentType')
+        {
+            array_shift($segments);
+            $contentTypeClass = 'App\\Cms\\ContentTypes\\' . $segments[0];
+            if ( ! class_exists($contentTypeClass))
+            {
+                App::abort(500, 'No class for ContentType "' . $contentTypeClass . '"');
+            }
+
+            $contentTypeInstance = new $contentTypeClass();
+            return $contentTypeInstance->handleActionSegments($segments);
+        }
     }
 }

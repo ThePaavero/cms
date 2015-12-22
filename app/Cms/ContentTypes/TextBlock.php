@@ -3,12 +3,13 @@
 namespace App\Cms\ContentTypes;
 
 use App\Cms\Core\Content;
+use Illuminate\Support\Facades\Route;
 
 class TextBlock
 {
     public function __construct()
     {
-        // ...
+        //Route::
     }
 
     public function render($parentId)
@@ -30,5 +31,10 @@ class TextBlock
         $contentString = $prefix . $contentString . $postfix;
 
         return $contentString;
+    }
+
+    public function handleActionSegments($segments)
+    {
+        return ';)';
     }
 }
