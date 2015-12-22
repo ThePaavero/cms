@@ -1,0 +1,40 @@
+/* Resets & variables */
+@import "base/normalize";
+@import "variables/colors";
+@import "variables/fonts";
+@import "variables/breakpoints";
+/* Mixins */
+@import "mixins/breakpoints";
+/* Typography & elements */
+@import "abstractions/fontstyles";
+@import "base/typography";
+/* Components */
+//@import "components/*";
+/* Layout & structure */
+@import "layout/structure";
+/* Browser compatibility & hacks */
+@import "layout/compatibility";
+@import "cms/public";
+
+body {
+  font-family: Arial;
+  font-size: 13px;
+  padding: 4%;
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
