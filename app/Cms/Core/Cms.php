@@ -183,9 +183,10 @@ class Cms
 
     public function getCompleteSiteMapAsNavigation()
     {
-    	$sitemap = new Sitemap();
+        $sitemap = new Sitemap();
         $nestedArray = $sitemap->getNestedArrayOfAllPages();
 
-        dd($nestedArray);
+        $navigation = new Navigation($nestedArray);
+        return $navigation->renderNestedList();
     }
 }

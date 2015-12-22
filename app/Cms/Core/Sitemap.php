@@ -11,51 +11,51 @@ class Sitemap
 
     public function getNestedArrayOfAllPages()
     {
-        $pages = $this->pages;
+        $pages = $this->pages->toArray();
 
         $tree = [];
 
         foreach ($pages as $page)
         {
-            $uri = $page->uri;
-            if ($uri === '')
+            $segments = explode('/', $page['uri']);
+
+            if ( ! isset($page['children']))
             {
-                // All pages are technically "children" of the home page, skip it its part...
-                continue;
+                $page['children'] = [];
             }
 
-            $tree[$uri] = $this->getKidsRecursive($page);
-        }
-
-        dd($tree);
-
-        return $pages;
-    }
-
-    public function getKidsRecursive($parentPage)
-    {
-        $parentUri = $parentPage->uri;
-        $parentSegmentCount = count(explode('/', $parentUri));
-        $kids = [];
-
-        // Get all pages that match my uri (plus has at least one more segment)
-        foreach ($this->pages as $page)
-        {
-            if (strpos($page->uri, $parentUri) === 0 && $page->uri != $parentUri)
+            if ( ! isset($tree[$segments[0]]))
             {
-                // Let's check the length
-                $kidSegmentCount = count(explode('/', $page->uri));
-                if ($kidSegmentCount != ($parentSegmentCount + 1))
+                $tree[$segments[0]] = [];
+            }
+
+            $current = &$tree;
+            for ($i = 0; $i < count($segments); $i ++)
+            {
+                $segment = $segments[$i];
+                if ( ! isset($current[$segment]))
                 {
-                    continue;
+                    $current[$segment] = [];
                 }
 
-                // We're directly under our parent!
-                $kids[] = $page;
+                if ($i === count($segments) - 1)
+                {
+                    array_push($current[$segment], $page);
+                }
+
+                $current = &$current[$segment];
             }
         }
 
-        return $kids;
+        $tree = $this->cleanUpNestedArray($tree);
+
+        return $tree;
+    }
+
+    public function cleanUpNestedArray($tree)
+    {
+        // @todo :)
+        return $tree;
     }
 
 }
