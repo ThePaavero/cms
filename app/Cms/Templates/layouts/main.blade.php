@@ -6,6 +6,9 @@
 
     <link rel='stylesheet' href='{{ url('assets/css/project.css') }}'/>
     <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <script>
+        window._CmsUserIsAdmin = {{ $userIsAdmin ? 'true' : 'false' }};
+    </script>
     @if(App::environment() != 'local')
         <script src='build.js'></script>
     @else

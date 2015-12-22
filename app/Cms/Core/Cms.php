@@ -3,6 +3,7 @@
 namespace App\Cms\Core;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 class Cms
@@ -58,7 +59,8 @@ class Cms
                 'content' => $content,
                 'contentTypesForTemplate' => $contentTypesForTemplate
             ],
-            'cms' => $this
+            'cms' => $this,
+            'userIsAdmin' => Auth::user() ? true : false
         ]);
     }
 

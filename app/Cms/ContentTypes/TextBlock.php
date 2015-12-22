@@ -24,7 +24,7 @@ class TextBlock
 
         $contentString = $contents->first()->content;
 
-        $prefix = '<div class="cms-content-wrapper">';
+        $prefix = '<div class="cms-content-wrapper" data-content-type="TextBlock">';
         $postfix = '</div>';
 
         $contentString = $prefix . $contentString . $postfix;
