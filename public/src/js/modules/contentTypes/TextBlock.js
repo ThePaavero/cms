@@ -24,8 +24,8 @@ class TextBlock {
                 type: 'POST',
                 url: _root + 'admin/contentType/TextBlock/updateContent/' + contentId,
                 data: data,
-                success: function (response) {
-                    console.log(response);
+                success: (response) => {
+                    $me.html(response);
                 }
             });
         });

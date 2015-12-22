@@ -43,6 +43,10 @@ class TextBlock
     {
         $newContent = Input::get('newContent');
 
-        return $newContent;
+        $contentRow = Content::findOrFail($id);
+        $contentRow->content = $newContent;
+        $contentRow->save();
+
+        return $contentRow->content;
     }
 }
