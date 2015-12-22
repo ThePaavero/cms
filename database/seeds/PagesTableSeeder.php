@@ -45,6 +45,11 @@ class PagesTableSeeder extends Seeder
                 'title' => 'Guaranteed Quality',
                 'templateSlug' => 'default'
             ],
+            [
+                'uri' => 'services/guaranteed-quality/quality-awards-won',
+                'title' => 'Awards Won for Quality',
+                'templateSlug' => 'default'
+            ],
         ];
 
         foreach ($pages as $pageData)
