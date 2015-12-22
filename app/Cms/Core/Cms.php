@@ -115,7 +115,7 @@ class Cms
             App::abort(500, 'No class for ContentType "' . $contentType['className'] . '"');
         }
 
-        $contentTypeInstance = new $contentTypeClass();
+        $contentTypeInstance = new $contentTypeClass($this->userIsAdmin());
         $renderedContent = $contentTypeInstance->render($mappedPageId);
 
         if ($renderedContent === false)
@@ -179,5 +179,13 @@ class Cms
             return;
         }
         return view('cmsAdmin::panel');
+    }
+
+    public function getCompleteSiteMapAsNavigation()
+    {
+    	$sitemap = new Sitemap();
+        $nestedArray = $sitemap->getNestedArrayOfAllPages();
+
+        dd($nestedArray);
     }
 }

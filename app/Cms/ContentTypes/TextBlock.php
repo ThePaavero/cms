@@ -5,13 +5,12 @@ namespace App\Cms\ContentTypes;
 use App\Cms\Core\Content;
 use App\Cms\Core\ContentHistory;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Route;
 
 class TextBlock
 {
-    public function __construct()
+    public function __construct($adminMode = false)
     {
-        // ...
+        $this->adminMode = $adminMode;
     }
 
     public function render($parentId)
@@ -27,7 +26,15 @@ class TextBlock
 
         $contentString = $contents->first()->content;
 
-        $prefix = '<div class="cms-content-wrapper" data-content-type="TextBlock" data-content-id="' . $contents->first()->id . '">';
+        if ($this->adminMode)
+        {
+            $prefix = '<div class="cms-content-wrapper" data-content-type="TextBlock" data-content-id="' . $contents->first()->id . '">';
+        }
+        else
+        {
+            $prefix = '<div class="cms-content-wrapper text-block">';
+        }
+
         $postfix = '</div>';
 
         $contentString = $prefix . $contentString . $postfix;

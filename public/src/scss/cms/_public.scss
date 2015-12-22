@@ -1,6 +1,9 @@
 .cms-content-wrapper {
 
-  &:hover {
-    background: #f1ff36;
+  body.cms-admin-logged-in & {
+    &:hover {
+      background: #f1ff36;
+    }
   }
+
 }

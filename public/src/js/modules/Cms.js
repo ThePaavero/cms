@@ -16,6 +16,7 @@ class Cms {
             console.log('CMS initiating... (admin is logged in)');
             this.doAjaxSetup();
             this.doEditableBlocks();
+            this.setBodyClass();
         }
     }
 
@@ -42,6 +43,10 @@ class Cms {
             let contentTypeInstance = new this.contentTypes[contentType]();
             contentTypeInstance.bootElement($node);
         }
+    }
+
+    setBodyClass() {
+        $('body').addClass('cms-admin-logged-in');
     }
 }
 

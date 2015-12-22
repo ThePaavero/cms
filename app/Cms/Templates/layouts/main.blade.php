@@ -23,6 +23,9 @@
 
 </head>
 <body>
+    <header>
+        {!! $cms->getCompleteSiteMapAsNavigation() !!}
+    </header>
 @yield('content')
 {!! $cms->getAdminPanel() !!}
 </body>
