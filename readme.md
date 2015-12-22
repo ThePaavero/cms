@@ -16,4 +16,3 @@ Create your database and set your DB config in .env file.
 $ php artisan migrate --seed
 ```
 Done.
-

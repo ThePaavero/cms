@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\View;
 
 class Cms
 {
+    public $currentPageId;
+
     public function __construct()
     {
         $this->config = include __DIR__ . '/../Config/cms.php';
@@ -23,6 +25,8 @@ class Cms
         {
             App::abort(404);
         }
+
+        $this->currentPageId = $mappedPage->id;
 
         $templateSlug = $mappedPage->templateSlug;
         $templateData = $this->getTemplateDataBySlug($templateSlug);
@@ -44,6 +48,8 @@ class Cms
             $content[$contentType['name']] = $this->renderContent($contentType, $mappedPage->id);
         }
 
+        $this->pageContent = $content;
+
         return view('cms::' . $templateSlug, [
             'data' => [
                 'config' => $this->config,
@@ -51,7 +57,8 @@ class Cms
                 'page' => $mappedPage->toArray(),
                 'content' => $content,
                 'contentTypesForTemplate' => $contentTypesForTemplate
-            ]
+            ],
+            'cms' => $this
         ]);
     }
 
@@ -62,6 +69,7 @@ class Cms
             if ($data['slug'] === $templateSlug)
             {
                 $data['name'] = $name;
+
                 return $data;
             }
         }
@@ -95,8 +103,15 @@ class Cms
         }
 
         $contentTypeInstance = new $contentTypeClass();
-        $contents[$contentType['slug']] = $contentTypeInstance->render($mappedPageId);
+        $renderedContent = $contentTypeInstance->render($mappedPageId);
 
-        return $contents;
+        return $renderedContent;
+    }
+
+    public function render($type)
+    {
+        $myContent = $this->pageContent[$type];
+
+        return $myContent;
     }
 }

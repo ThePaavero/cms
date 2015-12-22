@@ -22,6 +22,8 @@ class TextBlock
             return false;
         }
 
-        return $contents;
+        $contentString = $contents->first()->content;
+
+        return $contentString;
     }
 }
