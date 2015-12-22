@@ -4,12 +4,6 @@ import Heading from 'modules/contentTypes/Heading';
 class Cms {
 
     constructor() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
         this.userIsAdmin = window._CmsUserIsAdmin;
         this.contentTypes = {
             'TextBlock': TextBlock,
@@ -20,8 +14,17 @@ class Cms {
     init() {
         if (this.userIsAdmin) {
             console.log('CMS initiating... (admin is logged in)');
+            this.doAjaxSetup();
             this.doEditableBlocks();
         }
+    }
+
+    doAjaxSetup() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     }
 
     doEditableBlocks() {

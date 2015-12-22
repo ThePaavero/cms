@@ -14,8 +14,11 @@ class Cms
     {
         $this->config = include __DIR__ . '/../Config/cms.php';
 
-        $viewDir = __DIR__ . '/../Templates';
-        View::addNamespace('cms', $viewDir);
+        $templateViewDir = __DIR__ . '/../Templates';
+        $adminViewDir = __DIR__ . '/../Views';
+
+        View::addNamespace('cms', $templateViewDir);
+        View::addNamespace('cmsAdmin', $adminViewDir);
     }
 
     public function processUri($uri)
@@ -162,5 +165,19 @@ class Cms
 
             return $contentTypeInstance->handleActionSegments($segments);
         }
+    }
+
+    public function userIsAdmin()
+    {
+        return ! is_null(Auth::user());
+    }
+
+    public function getAdminPanel()
+    {
+        if ( ! $this->userIsAdmin())
+        {
+            return;
+        }
+        return view('cmsAdmin::panel');
     }
 }
