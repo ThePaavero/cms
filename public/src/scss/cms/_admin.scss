@@ -1,14 +1,19 @@
+$panelDark: rgba(0, 0, 0, 0.8);
+$panelHighlight: #bbcc6b;
+$panelDarkText: #000;
+
 .cms-admin-panel-wrapper {
   box-sizing: border-box;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  background: $panelDark;
   color: #fff;
   padding: 0;
   margin: 0;
-  padding: 10px;
+  line-height: 30px;
+  padding-left: 15px;
 
   h1 {
     padding: 0;
@@ -33,7 +38,44 @@
     text-decoration: none;
   }
 
+  .panel-menu-with-overlays {
+
+    li {
+      .child-toggler {
+        display: block;
+        background: $panelHighlight;
+        color: $panelDarkText;
+        padding: 0 10px;
+      }
+
+      &:hover {
+        .overlay {
+          display: block;
+        }
+      }
+    }
+
+    .overlay {
+      display: none;
+      position: absolute;
+      left: 0;
+      background: $panelDark;
+      line-height: normal;
+      width: 320px;
+
+      a {
+        display: block;
+        padding: 10px 15px;
+
+        &:hover {
+          background: $panelHighlight;
+          color: $panelDarkText;
+        }
+      }
+    }
+  }
+
   nav {
-    // ...
+    position: relative;
   }
 }

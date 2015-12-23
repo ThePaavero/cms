@@ -1,4 +1,4 @@
-<ul>
+<ul class='panel-menu-with-overlays'>
     <li>
         <a href='#' class='child-toggler'>Page</a>
         <ul class='overlay'>
