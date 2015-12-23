@@ -23,9 +23,10 @@
 
 </head>
 <body>
-    <header>
-        {!! $cms->getCompleteSiteMapAsNavigation() !!}
-    </header>
+<header class='main-header'>
+    {!! $cms->getCompleteSiteMapAsNavigation() !!}
+</header>
+<!-- main-header -->
 @yield('content')
 {!! $cms->getAdminPanel() !!}
 </body>
