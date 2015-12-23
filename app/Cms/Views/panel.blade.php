@@ -2,7 +2,12 @@
 
     <h1>CMS Panel</h1>
     <section>
-
+        @foreach($data['controls'] as $controlMarkup)
+            <nav class='controls'>
+                {{ $controlMarkup }}
+            </nav>
+            <!-- controls -->
+        @endforeach
     </section>
     <section>
         <nav>

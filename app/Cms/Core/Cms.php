@@ -9,13 +9,21 @@ use Illuminate\Support\Facades\View;
 class Cms
 {
     public $currentPageId;
+    public $sitemap;
+    public $tree;
+    public $modules;
 
     public function __construct()
     {
         $this->config = include __DIR__ . '/../Config/cms.php';
 
+        $this->sitemap = new Sitemap();
+        $this->tree = $this->sitemap->getNestedArrayOfAllPages();
+
         $templateViewDir = __DIR__ . '/../Templates';
         $adminViewDir = __DIR__ . '/../Views';
+
+        $this->modules = $this->bootAvailableModules();
 
         View::addNamespace('cms', $templateViewDir);
         View::addNamespace('cmsAdmin', $adminViewDir);
@@ -176,17 +184,37 @@ class Cms
     {
         if ( ! $this->userIsAdmin())
         {
-            return;
+            return '';
         }
-        return view('cmsAdmin::panel');
+
+        $panel = new AdminPanel($this->tree, $this->modules);
+
+        return $panel->renderPanel();
     }
 
     public function getCompleteSiteMapAsNavigation()
     {
-        $sitemap = new Sitemap();
-        $nestedArray = $sitemap->getNestedArrayOfAllPages();
+        $navigation = new Navigation($this->tree);
 
-        $navigation = new Navigation($nestedArray);
         return $navigation->renderNestedList();
+    }
+
+    public function bootAvailableModules()
+    {
+        $instances = [];
+
+        $coreControlModules = [
+            'PageControls'
+        ];
+
+        foreach ($coreControlModules as $moduleName)
+        {
+            $completeClassPath = 'App\\Cms\\Modules\\Control\\Core\\PageControls\\' . $moduleName;
+            $instance = new $completeClassPath();
+
+            $instances[$moduleName] = $instance;
+        }
+
+        return $instances;
     }
 }

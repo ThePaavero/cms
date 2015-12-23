@@ -27,5 +27,7 @@ return [
             'description' => 'Template with wider content area.',
             'contentTypes' => ['Text Block', 'Heading']
         ]
+    ],
+    'modules' => [
     ]
 ];
