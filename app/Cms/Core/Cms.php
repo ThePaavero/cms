@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\View;
 class Cms
 {
     public $currentPageId;
+    public $currentPageObject;
+    public $adminPanelMarkup;
     public $sitemap;
     public $tree;
     public $modules;
@@ -22,8 +24,6 @@ class Cms
 
         $templateViewDir = __DIR__ . '/../Templates';
         $adminViewDir = __DIR__ . '/../Views';
-
-        $this->modules = $this->bootAvailableModules();
 
         View::addNamespace('cms', $templateViewDir);
         View::addNamespace('cmsAdmin', $adminViewDir);
@@ -47,6 +47,12 @@ class Cms
         }
 
         $this->currentPageId = $mappedPage->id;
+        $this->currentPageObject = $mappedPage;
+
+        $this->modules = $this->bootAvailableModules();
+
+        $panel = new AdminPanel($this->tree, $this->modules);
+        $this->adminPanelMarkup = $panel->renderPanel();
 
         $templateSlug = $mappedPage->templateSlug;
         $templateData = $this->getTemplateDataBySlug($templateSlug);
@@ -182,14 +188,7 @@ class Cms
 
     public function getAdminPanel()
     {
-        if ( ! $this->userIsAdmin())
-        {
-            return '';
-        }
-
-        $panel = new AdminPanel($this->tree, $this->modules);
-
-        return $panel->renderPanel();
+        return $this->adminPanelMarkup;
     }
 
     public function getCompleteSiteMapAsNavigation()
@@ -201,6 +200,8 @@ class Cms
 
     public function bootAvailableModules()
     {
+        $currentPageObject = $this->currentPageObject;
+
         $instances = [];
 
         $coreControlModules = [
@@ -210,7 +211,7 @@ class Cms
         foreach ($coreControlModules as $moduleName)
         {
             $completeClassPath = 'App\\Cms\\Modules\\Control\\Core\\PageControls\\' . $moduleName;
-            $instance = new $completeClassPath();
+            $instance = new $completeClassPath($currentPageObject);
 
             $instances[$moduleName] = $instance;
         }
