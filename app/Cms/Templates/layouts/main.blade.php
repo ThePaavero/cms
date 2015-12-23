@@ -12,11 +12,12 @@
         window._CmsUserIsAdmin = {{ $userIsAdmin ? 'true' : 'false' }};
     </script>
     @if(App::environment() != 'local')
-        <script src='build.js'></script>
+        <script src='{{ url('build.js') }}'></script>
     @else
-        <script src='jspm_packages/system.js'></script>
-        <script src='config.js'></script>
+        <script src='{{ url('jspm_packages/system.js') }}'></script>
+        <script src='{{ url('config.js') }}'></script>
         <script>
+            System.baseURL = window._root;
             System.import('main');
         </script>
     @endif
