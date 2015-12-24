@@ -188,7 +188,7 @@ class Cms
 
     public function getAdminPanel()
     {
-        return $this->adminPanelMarkup;
+        return $this->userIsAdmin() ? $this->adminPanelMarkup : '';
     }
 
     public function getCompleteSiteMapAsNavigation()

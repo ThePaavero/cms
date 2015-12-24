@@ -61,7 +61,8 @@ $panelDarkText: #000;
       left: 0;
       background: $panelDark;
       line-height: normal;
-      width: 320px;
+      width: 25vw;
+      min-width: 150px;
 
       a {
         display: block;
