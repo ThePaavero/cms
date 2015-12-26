@@ -33,6 +33,7 @@ class Cms {
     }
 
     loadUrlIntoAdminModal(url) {
+        console.log('Opening admin modal with URL "' + url + '"');
         Custombox.open({
             target: url,
             effect: 'makeway'

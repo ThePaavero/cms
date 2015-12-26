@@ -44,6 +44,7 @@ class TextBlock
 
     public function handleActionSegments($segments)
     {
+        return 'HELLO!';
         return $this->$segments[0]($segments[1]);
     }
 
