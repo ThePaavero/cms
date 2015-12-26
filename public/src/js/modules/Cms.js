@@ -21,6 +21,25 @@ class Cms {
     }
 
     doAjaxSetup() {
+        this.setCsrfTokenHeader();
+
+        let adminMenuModalLinks = $('.modal-link');
+
+        adminMenuModalLinks.on('click', (e) => {
+            e.preventDefault();
+            let link = e.currentTarget;
+            this.loadUrlIntoAdminModal($(link).attr('href'));
+        });
+    }
+
+    loadUrlIntoAdminModal(url) {
+        Custombox.open({
+            target: url,
+            effect: 'makeway'
+        });
+    }
+
+    setCsrfTokenHeader() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
