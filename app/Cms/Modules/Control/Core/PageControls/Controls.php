@@ -4,7 +4,7 @@ namespace App\Cms\Modules\Control\Core\PageControls;
 
 use Illuminate\Support\Facades\View;
 
-class PageControls
+class Controls
 {
     public $currentPageObject;
 

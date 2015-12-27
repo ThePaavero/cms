@@ -33,10 +33,7 @@ class Cms
     {
         if (explode('/', $uri)[0] === 'admin')
         {
-            $segments = explode('/', $uri);
-            array_shift($segments);
-
-            return $this->processAdminUri($segments);
+            return $this->processAdminUri($uri);
         }
 
         $mapper = new UriMapper($uri);
@@ -163,22 +160,21 @@ class Cms
         $content->save();
     }
 
-    public function processAdminUri($segments)
+    public function processAdminUri($uri)
     {
-        if ($segments[0] === 'contentType')
+        $bits = explode('*', $uri);
+
+        $namespace = $bits[1];
+
+        $moduleClassName = 'App\\Cms\\' . str_replace('/', '\\', $namespace);
+        if ( ! class_exists($moduleClassName))
         {
-            array_shift($segments);
-            $contentTypeClass = 'App\\Cms\\ContentTypes\\' . $segments[0];
-            if ( ! class_exists($contentTypeClass))
-            {
-                App::abort(500, 'No class for ContentType "' . $contentTypeClass . '"');
-            }
-
-            $contentTypeInstance = new $contentTypeClass();
-            array_shift($segments);
-
-            return $contentTypeInstance->handleActionSegments($segments);
+            App::abort(500, 'No class for module "' . $moduleClassName . '"');
         }
+
+        $moduleInstance = new $moduleClassName();
+
+        return $moduleInstance->handleActionSegments($uri);
     }
 
     public function userIsAdmin()
@@ -210,7 +206,7 @@ class Cms
 
         foreach ($coreControlModules as $moduleName)
         {
-            $completeClassPath = 'App\\Cms\\Modules\\Control\\Core\\PageControls\\' . $moduleName;
+            $completeClassPath = 'App\\Cms\\Modules\\Control\\Core\\' . $moduleName . '\\Controls';
             $instance = new $completeClassPath($currentPageObject);
 
             $instances[$moduleName] = $instance;
